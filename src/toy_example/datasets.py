@@ -6,12 +6,11 @@ from toy_example.constants import ADMITTED_DISCHARGE_DESTINATION
 from toy_example.utils import list_to_sql_array
 
 
-class FoundrySQLWrapper():
-
+class FoundrySQLWrapper:
     def __init__(
         self,
         foundry_domain=os.environ["FOUNDRY_DOMAIN"],
-        foundry_auth_header=os.environ["FOUNDRY_AUTH_HEADER"]
+        foundry_auth_header=os.environ["FOUNDRY_AUTH_HEADER"],
     ):
         self.conn = connect(foundry_domain, foundry_auth_header)
 

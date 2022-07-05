@@ -5,34 +5,30 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 
 
-class ECDSAdmissionsClassifier():
+class ModelPipelineWrapper:
+    def __init__(self, model):
+        self.model = model
 
-    def __init__(
-        self,
-        preprocessor=None,
-        classifier=LogisticRegression(),
-    ):
-        if preprocessor is not None:
-            self.preprocessor = preprocessor
-        else:
-            numeric_features = ["age_at_arrival"]
-            numeric_transformer = StandardScaler()
 
-            categorical_features = ["sex"]
-            categorical_transformer = OneHotEncoder(handle_unknown="ignore")
+class LogisticRegressionWrapper(ModelPipelineWrapper):
+    def __init__(self, **classifier_kwargs):
+        numeric_features = ["age_at_arrival"]
+        numeric_transformer = StandardScaler()
 
-            self.preprocessor = ColumnTransformer(
-                transformers=[
-                    ("num", numeric_transformer, numeric_features),
-                    ("cat", categorical_transformer, categorical_features),
-                ]
-            )
+        categorical_features = ["sex"]
+        categorical_transformer = OneHotEncoder(handle_unknown="ignore")
 
-        self.classifier = classifier
-
-        self.model = Pipeline(
-            steps=[
-                ("preprocessor", self.preprocessor),
-                ("classifier", self.classifier)
+        self.preprocessor = ColumnTransformer(
+            transformers=[
+                ("num", numeric_transformer, numeric_features),
+                ("cat", categorical_transformer, categorical_features),
             ]
         )
+
+        self.classifier = LogisticRegression(**classifier_kwargs)
+
+        model = Pipeline(
+            steps=[("preprocessor", self.preprocessor), ("classifier", self.classifier)]
+        )
+
+        super().__init__(model)
