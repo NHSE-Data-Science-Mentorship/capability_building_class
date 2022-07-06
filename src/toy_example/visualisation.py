@@ -2,12 +2,21 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve
 from sklearn.metrics import RocCurveDisplay
 from sklearn.metrics import auc
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 
 def plot_roc(y_test, y_score):
     fpr, tpr, _ = roc_curve(y_test, y_score)
     roc_display = RocCurveDisplay(fpr=fpr, tpr=tpr).plot()
     roc_display.ax_.set_title(f"AUC = {auc(fpr, tpr):.2f}")
+    plt.show()
+
+
+def plot_confusion_matrix(y_true, y_pred, normalize="true"):
+    cm = ConfusionMatrixDisplay(
+        confusion_matrix(y_true, y_pred, normalize=normalize)
+    ).plot()
+    cm.ax_.set_title("Confusion Matrix for predictions")
     plt.show()
 
 
