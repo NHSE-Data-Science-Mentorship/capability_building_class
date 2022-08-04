@@ -2,6 +2,7 @@ from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_sc
 from dataclasses import dataclass
 import pandas as pd
 
+
 @dataclass
 class PerformanceData:
     true_class_balance: pd.Series

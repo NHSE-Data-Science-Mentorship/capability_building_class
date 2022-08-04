@@ -1,2 +1,3 @@
 [run]
 omit = */visualisation.py
+       */constants.py

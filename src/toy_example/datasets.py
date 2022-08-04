@@ -28,11 +28,15 @@ class FoundrySQLWrapper:
         return location_df["location_id"].values
 
     def get_ecds(self, location_ids):
-        query_string = f"""
-                        SELECT organisation_code as location_id
-                        FROM "/NHS/Locations Ontology/data/objects/nhs_trust"
-                        WHERE trust_type = 'Acute Trust Type 1'
-                        """
+        query_string = query = f"""
+            SELECT der_provider_code, age_at_arrival, sex, 
+            CASE
+                WHEN (discharge_destination_snomed_ct IN {list_to_sql_array(ADMITTED_DISCHARGE_DESTINATION)}) THEN 1
+                ELSE 0
+            END AS admitted
+            FROM "/NHS/NHS: ECDS Patient Level/data/transform/ecds_v2"
+            WHERE (der_provider_code IN {list_to_sql_array(location_ids)}) AND (discharge_destination_snomed_ct IS NOT NULL) AND (DATE(arrival_time)>=DATE('2022-03-01')) AND DATE(arrival_time)<=DATE('2022-03-02')
+            """
 
         ecds_df = self.execute_sql_query(query_string)
 

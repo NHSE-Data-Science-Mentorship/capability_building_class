@@ -1,17 +1,29 @@
-from toy_example.performance import *
 import pandas as pd
+import pytest
 
-y_true = pd.Series([1,1,1,0,0,0])
-y_pred = pd.Series([1,1,1,1,1,1])
-performance_result = get_performance_metrics(y_true,y_pred)
+from toy_example.performance import *
 
 
-def test_get_performance_metrics():
+@pytest.fixture
+def y_true():
+    return pd.Series([1, 1, 1, 0, 0, 0])
 
-    pd.testing.assert_series_equal(performance_result.true_class_balance,pd.Series([0.5,0.5]))
-    # add further tests
 
-    
+@pytest.fixture
+def y_pred():
+    return pd.Series([1, 1, 1, 1, 1, 1])
+
+
+@pytest.fixture
+def performance_result(y_true,y_pred) -> PerformanceData:
+    return get_performance_metrics(y_true, y_pred)
+
+
+def test_get_performance_metrics(performance_result):
+
+    assert type(performance_result) == PerformanceData
+
+
 # This is hacky, the correct version is in the link https://realpython.com/lessons/mocking-print-unit-tests/
-def test_print_performance_metrics_runs(): 
+def test_print_performance_metrics_runs(performance_result):
     assert print_performance_metrics(performance_result)

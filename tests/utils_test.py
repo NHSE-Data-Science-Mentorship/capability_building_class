@@ -1,6 +1,7 @@
-from toy_example.utils import *
 import numpy as np
 import pytest
+
+from toy_example.utils import *
 
 
 def test_list_to_sql_array_good():
