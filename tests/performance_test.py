@@ -15,7 +15,7 @@ def y_pred():
 
 
 @pytest.fixture
-def performance_result(y_true,y_pred) -> PerformanceData:
+def performance_result(y_true, y_pred) -> PerformanceData:
     return get_performance_metrics(y_true, y_pred)
 
 

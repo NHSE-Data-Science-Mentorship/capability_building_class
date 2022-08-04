@@ -9,9 +9,9 @@ from toy_example.utils import list_to_sql_array
 class FoundrySQLWrapper:
     def __init__(
         self,
-        foundry_domain=os.environ["FOUNDRY_DOMAIN"],
-        foundry_auth_header=os.environ["FOUNDRY_AUTH_HEADER"],
     ):
+        foundry_domain = (os.environ["FOUNDRY_DOMAIN"],)
+        foundry_auth_header = (os.environ["FOUNDRY_AUTH_HEADER"],)
         self.conn = connect(foundry_domain, foundry_auth_header)
 
     def execute_sql_query(self, query_string):
