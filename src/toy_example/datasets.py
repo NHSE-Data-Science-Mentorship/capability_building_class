@@ -28,7 +28,7 @@ class FoundrySQLWrapper:
         return location_df["location_id"].values
 
     def get_ecds(self, location_ids):
-        query_string = query = f"""
+        query_string = f"""
             SELECT der_provider_code, age_at_arrival, sex, 
             CASE
                 WHEN (discharge_destination_snomed_ct IN {list_to_sql_array(ADMITTED_DISCHARGE_DESTINATION)}) THEN 1

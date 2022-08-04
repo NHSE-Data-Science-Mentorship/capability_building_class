@@ -1,7 +1,8 @@
 from toy_example.datasets import FoundrySQLWrapper
 import pytest
 import pandas as pd
-from mock import patch
+
+# from mock import patch
 
 
 # how to deal with connections/things you don't want to run at test time in the __init__
