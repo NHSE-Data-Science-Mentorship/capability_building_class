@@ -13,7 +13,7 @@ class TestFoundrySQLWrapper(FoundrySQLWrapper):
 
 # Alternative:
 # @pytest.fixture
-# def TestFoundrySQLWrapper(mocker):
+# def TestFoundrySQLWrapper():
 #     def __init__(self):
 #         self.conn = "Connection"
 
@@ -26,7 +26,7 @@ def location_df():
     return pd.DataFrame({"location_id": ["RAL", "RH8", "RJ2"]})
 
 
-def test_FoundrySQLWrapper():  # TestFoundrySQLWrapper):
+def test_FoundrySQLWrapper_init():  # TestFoundrySQLWrapper):
 
     test_class = TestFoundrySQLWrapper()
     # garbage test, just to show how you can override init
@@ -34,3 +34,11 @@ def test_FoundrySQLWrapper():  # TestFoundrySQLWrapper):
     assert type(test_class) == TestFoundrySQLWrapper
 
     # assert TestFoundrySQLWrapper == FoundrySQLWrapper
+
+
+def test_get_acute_type_one_trusts():
+    pass
+
+
+def test_get_ecds():
+    pass
